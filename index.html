@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base64 Decoder & Encoder</title>
+  <meta name="description" content="Encode and decode Base64 strings instantly in your browser. No data is sent to any server.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X2Q4B9B9YF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-X2Q4B9B9YF');
+  </script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div class="container mx-auto px-4 py-8 max-w-2xl">
+    <h1 class="text-green-700 text-center font-bold text-3xl mb-4">
+      Base64 Decoder & Encoder
+    </h1>
+
+    <p class="text-gray-600 mb-2">
+      Enter your string in either textarea below. Encoding and decoding happens instantly as you type.
+    </p>
+    <p class="text-gray-500 text-sm mb-6">
+      All processing happens in your browser. No data is sent anywhere.
+    </p>
+
+    <div class="space-y-6">
+      <!-- Plain Text Input -->
+      <div>
+        <label for="plainText" class="block mb-2 text-sm font-medium text-gray-900">
+          Plain Text
+        </label>
+        <textarea
+          id="plainText"
+          rows="4"
+          class="block p-3 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
+          placeholder="Enter text to encode..."
+        ></textarea>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex gap-2">
+        <button
+          id="encodeBtn"
+          class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg transition-colors"
+        >
+          Encode
+        </button>
+        <button
+          id="decodeBtn"
+          class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition-colors"
+        >
+          Decode
+        </button>
+        <button
+          id="swapBtn"
+          class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg transition-colors"
+          title="Swap values"
+        >
+          ⇅
+        </button>
+        <button
+          id="clearBtn"
+          class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg transition-colors"
+          title="Clear all"
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- Base64 Output -->
+      <div>
+        <label for="base64Text" class="block mb-2 text-sm font-medium text-gray-900">
+          Base64
+        </label>
+        <textarea
+          id="base64Text"
+          rows="4"
+          class="block p-3 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
+          placeholder="Enter Base64 to decode..."
+        ></textarea>
+      </div>
+
+      <!-- Error Message -->
+      <div id="errorMsg" class="hidden text-red-600 text-sm bg-red-50 p-3 rounded-lg border border-red-200"></div>
+
+      <!-- Copy Buttons -->
+      <div class="flex gap-2">
+        <button
+          id="copyPlainBtn"
+          class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors text-sm"
+        >
+          Copy Plain Text
+        </button>
+        <button
+          id="copyBase64Btn"
+          class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors text-sm"
+        >
+          Copy Base64
+        </button>
+      </div>
+    </div>
+
+    <!-- Popular Examples Section -->
+    <div class="mt-10">
+      <h2 class="text-lg font-semibold text-gray-700 mb-3">Popular Base64 Examples</h2>
+      <p class="text-sm text-gray-500 mb-4">Click any example to decode it:</p>
+      <div id="examples" class="flex flex-wrap gap-2"></div>
+    </div>
+
+    <!-- URL Decode Section -->
+    <div class="mt-10 p-4 bg-white rounded-lg border border-gray-200">
+      <h2 class="text-lg font-semibold text-gray-700 mb-3">Decode from URL</h2>
+      <p class="text-sm text-gray-500 mb-2">
+        Share links like: <code class="bg-gray-100 px-1 rounded">?b64=SGVsbG8gV29ybGQ=</code>
+      </p>
+      <div id="urlDecoded" class="hidden mt-3 p-3 bg-green-50 rounded border border-green-200">
+        <span class="text-sm text-gray-600">Decoded from URL:</span>
+        <div id="urlDecodedText" class="font-mono text-green-700 mt-1"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const plainTextEl = document.getElementById('plainText');
+    const base64TextEl = document.getElementById('base64Text');
+    const errorMsgEl = document.getElementById('errorMsg');
+    const examplesEl = document.getElementById('examples');
+    const urlDecodedEl = document.getElementById('urlDecoded');
+    const urlDecodedTextEl = document.getElementById('urlDecodedText');
+
+    // Popular examples (plain text values)
+    const examples = [
+      'password', 'hello', '123456', 'admin', 'test', 'secret',
+      'welcome', 'login', 'user', 'root', 'master', 'guest'
+    ];
+
+    function showError(msg) {
+      errorMsgEl.textContent = msg;
+      errorMsgEl.classList.remove('hidden');
+    }
+
+    function hideError() {
+      errorMsgEl.classList.add('hidden');
+    }
+
+    function encode() {
+      hideError();
+      try {
+        const text = plainTextEl.value;
+        base64TextEl.value = btoa(unescape(encodeURIComponent(text)));
+      } catch (e) {
+        showError('Error encoding: ' + e.message);
+      }
+    }
+
+    function decode() {
+      hideError();
+      try {
+        const b64 = base64TextEl.value.trim();
+        if (!b64) {
+          plainTextEl.value = '';
+          return;
+        }
+        plainTextEl.value = decodeURIComponent(escape(atob(b64)));
+      } catch (e) {
+        showError('Invalid Base64 string. Please check your input.');
+      }
+    }
+
+    function swap() {
+      const temp = plainTextEl.value;
+      plainTextEl.value = base64TextEl.value;
+      base64TextEl.value = temp;
+    }
+
+    function clearAll() {
+      plainTextEl.value = '';
+      base64TextEl.value = '';
+      hideError();
+    }
+
+    async function copyToClipboard(text, button) {
+      try {
+        await navigator.clipboard.writeText(text);
+        const originalText = button.textContent;
+        button.textContent = 'Copied!';
+        button.classList.add('bg-green-200');
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.classList.remove('bg-green-200');
+        }, 1500);
+      } catch (e) {
+        showError('Failed to copy to clipboard');
+      }
+    }
+
+    // Event listeners
+    document.getElementById('encodeBtn').addEventListener('click', encode);
+    document.getElementById('decodeBtn').addEventListener('click', decode);
+    document.getElementById('swapBtn').addEventListener('click', swap);
+    document.getElementById('clearBtn').addEventListener('click', clearAll);
+
+    document.getElementById('copyPlainBtn').addEventListener('click', function() {
+      copyToClipboard(plainTextEl.value, this);
+    });
+
+    document.getElementById('copyBase64Btn').addEventListener('click', function() {
+      copyToClipboard(base64TextEl.value, this);
+    });
+
+    // Real-time encoding/decoding as you type
+    plainTextEl.addEventListener('input', encode);
+    base64TextEl.addEventListener('input', decode);
+
+    // Generate example buttons dynamically
+    examples.forEach(example => {
+      const btn = document.createElement('button');
+      const b64 = btoa(example);
+      btn.className = 'px-3 py-1 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded text-sm font-mono transition-colors';
+      btn.textContent = b64;
+      btn.title = `Click to decode: ${example}`;
+      btn.addEventListener('click', () => {
+        base64TextEl.value = b64;
+        decode();
+        base64TextEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      examplesEl.appendChild(btn);
+    });
+
+    // Handle URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const b64Param = urlParams.get('b64');
+    if (b64Param) {
+      try {
+        base64TextEl.value = b64Param;
+        const decoded = decodeURIComponent(escape(atob(b64Param)));
+        plainTextEl.value = decoded;
+        urlDecodedEl.classList.remove('hidden');
+        urlDecodedTextEl.textContent = decoded;
+      } catch (e) {
+        showError('Invalid Base64 in URL parameter');
+      }
+    }
+  </script>
+</body>
+</html>
