@@ -3,8 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Base64 Decoder & Encoder</title>
-  <meta name="description" content="Encode and decode Base64 strings instantly in your browser. No data is sent to any server.">
+
+  <!-- Primary Meta Tags -->
+  <title>Base64 Decoder & Encoder - Free Online Tool | base64decoder.de</title>
+  <meta name="title" content="Base64 Decoder & Encoder - Free Online Tool | base64decoder.de">
+  <meta name="description" content="Free online Base64 encoder and decoder. Convert text to Base64 and decode Base64 strings instantly in your browser. 100% client-side - no data sent to servers. Fast, secure, and private.">
+  <meta name="keywords" content="base64, decoder, encoder, base64 decode, base64 encode, online tool, free, convert, text to base64, base64 to text">
+  <meta name="author" content="base64decoder.de">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.base64decoder.de/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.base64decoder.de/">
+  <meta property="og:title" content="Base64 Decoder & Encoder - Free Online Tool">
+  <meta property="og:description" content="Convert text to Base64 and decode Base64 strings instantly. 100% client-side processing - your data never leaves your browser.">
+  <meta property="og:site_name" content="base64decoder.de">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary">
+  <meta property="twitter:url" content="https://www.base64decoder.de/">
+  <meta property="twitter:title" content="Base64 Decoder & Encoder - Free Online Tool">
+  <meta property="twitter:description" content="Convert text to Base64 and decode Base64 strings instantly. 100% client-side processing - your data never leaves your browser.">
+
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#15803d">
+  <meta name="application-name" content="Base64 Decoder">
+  <link rel="alternate" hreflang="en" href="https://www.base64decoder.de/">
+  <link rel="alternate" hreflang="x-default" href="https://www.base64decoder.de/">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Base64 Decoder & Encoder",
+    "url": "https://www.base64decoder.de/",
+    "description": "Free online Base64 encoder and decoder. Convert text to Base64 and decode Base64 strings instantly in your browser.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    },
+    "featureList": [
+      "Base64 encoding",
+      "Base64 decoding",
+      "Real-time conversion",
+      "Client-side processing",
+      "No data transmission",
+      "URL parameter support"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Base64 encoding?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Base64 is a binary-to-text encoding scheme that converts binary data into an ASCII string format using 64 printable characters. It's commonly used to encode data for transmission over media designed for text."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data secure when using this tool?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, all encoding and decoding happens entirely in your browser. No data is ever sent to any server, ensuring complete privacy and security."
+        }
+      }
+    ]
+  }
+  </script>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-X2Q4B9B9YF"></script>
@@ -15,7 +94,8 @@
     gtag('config', 'G-X2Q4B9B9YF');
   </script>
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-gray-100 min-h-screen flex flex-col">
+  <main class="flex-grow">
   <div class="container mx-auto px-4 py-8 max-w-2xl">
     <h1 class="text-green-700 text-center font-bold text-3xl mb-4">
       Base64 Decoder & Encoder
@@ -123,7 +203,45 @@
         <div id="urlDecodedText" class="font-mono text-green-700 mt-1"></div>
       </div>
     </div>
+
+    <!-- SEO Content Section -->
+    <article class="mt-10 p-6 bg-white rounded-lg border border-gray-200">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">What is Base64 Encoding?</h2>
+      <p class="text-gray-600 mb-4">
+        Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string format. It uses 64 printable characters (A-Z, a-z, 0-9, +, /) to encode data, making it safe for transmission over text-based protocols like email or HTTP.
+      </p>
+
+      <h3 class="text-lg font-semibold text-gray-700 mb-2">Common Uses of Base64</h3>
+      <ul class="list-disc list-inside text-gray-600 mb-4 space-y-1">
+        <li>Embedding images in HTML/CSS (data URIs)</li>
+        <li>Encoding email attachments (MIME)</li>
+        <li>Storing complex data in JSON or XML</li>
+        <li>Basic HTTP authentication headers</li>
+        <li>Encoding binary data for API transmission</li>
+      </ul>
+
+      <h3 class="text-lg font-semibold text-gray-700 mb-2">Why Use This Base64 Tool?</h3>
+      <ul class="list-disc list-inside text-gray-600 space-y-1">
+        <li><strong>100% Private:</strong> All processing happens in your browser - no server involved</li>
+        <li><strong>Instant Results:</strong> Real-time encoding and decoding as you type</li>
+        <li><strong>Free & Unlimited:</strong> No registration, no limits, no ads</li>
+        <li><strong>Shareable Links:</strong> Create URLs that auto-decode Base64 strings</li>
+      </ul>
+    </article>
   </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-gray-400 mt-12 py-8">
+    <div class="container mx-auto px-4 max-w-2xl text-center">
+      <p class="text-sm mb-2">
+        &copy; 2025 base64decoder.de - Free Online Base64 Encoder & Decoder
+      </p>
+      <p class="text-xs">
+        Privacy-first tool. Your data never leaves your browser.
+      </p>
+    </div>
+  </footer>
 
   <script>
     const plainTextEl = document.getElementById('plainText');
