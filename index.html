@@ -28,7 +28,7 @@
   <meta property="twitter:description" content="Convert text to Base64 and decode Base64 strings instantly. 100% client-side processing - your data never leaves your browser.">
 
   <!-- Additional SEO -->
-  <meta name="theme-color" content="#15803d">
+  <meta name="theme-color" content="#1e1b4b">
   <meta name="application-name" content="Base64 Decoder">
   <link rel="alternate" hreflang="en" href="https://www.base64decoder.de/">
   <link rel="alternate" hreflang="x-default" href="https://www.base64decoder.de/">
@@ -94,150 +94,227 @@
     gtag('config', 'G-X2Q4B9B9YF');
   </script>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
-  <main class="flex-grow">
-  <div class="container mx-auto px-4 py-8 max-w-2xl">
-    <h1 class="text-green-700 text-center font-bold text-3xl mb-4">
-      Base64 Decoder & Encoder
-    </h1>
+<body class="min-h-screen flex flex-col bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+  <!-- Animated background effect -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+    <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style="animation-delay: 2s;"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" style="animation-delay: 4s;"></div>
+  </div>
 
-    <p class="text-gray-600 mb-2">
-      Enter your string in either textarea below. Encoding and decoding happens instantly as you type.
-    </p>
-    <p class="text-gray-500 text-sm mb-6">
-      All processing happens in your browser. No data is sent anywhere.
-    </p>
-
-    <div class="space-y-6">
-      <!-- Plain Text Input -->
-      <div>
-        <label for="plainText" class="block mb-2 text-sm font-medium text-gray-900">
-          Plain Text
-        </label>
-        <textarea
-          id="plainText"
-          rows="4"
-          class="block p-3 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
-          placeholder="Enter text to encode..."
-        ></textarea>
+  <main class="flex-grow relative z-10">
+  <div class="container mx-auto px-4 py-12 max-w-2xl">
+    <!-- Header with icon -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400 to-cyan-500 shadow-lg shadow-emerald-500/30 mb-4">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+        </svg>
       </div>
+      <h1 class="text-4xl font-bold bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent mb-3">
+        Base64 Decoder & Encoder
+      </h1>
+      <p class="text-slate-300 text-lg">
+        Convert text instantly as you type
+      </p>
+      <p class="text-slate-500 text-sm mt-2 flex items-center justify-center gap-2">
+        <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+        </svg>
+        100% private - all processing happens in your browser
+      </p>
+    </div>
 
-      <!-- Action Buttons -->
-      <div class="flex gap-2">
-        <button
-          id="encodeBtn"
-          class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg transition-colors"
-        >
-          Encode
-        </button>
-        <button
-          id="decodeBtn"
-          class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition-colors"
-        >
-          Decode
-        </button>
-        <button
-          id="swapBtn"
-          class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg transition-colors"
-          title="Swap values"
-        >
-          ⇅
-        </button>
-        <button
-          id="clearBtn"
-          class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg transition-colors"
-          title="Clear all"
-        >
-          ✕
-        </button>
-      </div>
+    <!-- Main Card -->
+    <div class="backdrop-blur-xl bg-white/10 rounded-3xl border border-white/20 shadow-2xl p-6 md:p-8">
+      <div class="space-y-6">
+        <!-- Plain Text Input -->
+        <div class="group">
+          <label for="plainText" class="block mb-2 text-sm font-semibold text-slate-300 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+            Plain Text
+          </label>
+          <textarea
+            id="plainText"
+            rows="4"
+            class="block p-4 w-full text-sm text-white bg-slate-800/50 rounded-xl border border-slate-700/50 focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 focus:outline-none transition-all duration-300 placeholder-slate-500 backdrop-blur-sm resize-none"
+            placeholder="Enter text to encode..."
+          ></textarea>
+        </div>
 
-      <!-- Base64 Output -->
-      <div>
-        <label for="base64Text" class="block mb-2 text-sm font-medium text-gray-900">
-          Base64
-        </label>
-        <textarea
-          id="base64Text"
-          rows="4"
-          class="block p-3 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
-          placeholder="Enter Base64 to decode..."
-        ></textarea>
-      </div>
+        <!-- Action Buttons -->
+        <div class="flex gap-3">
+          <button
+            id="encodeBtn"
+            class="flex-1 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-semibold py-3.5 px-4 rounded-xl transition-all duration-300 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.02] active:scale-[0.98]"
+          >
+            Encode
+          </button>
+          <button
+            id="decodeBtn"
+            class="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-semibold py-3.5 px-4 rounded-xl transition-all duration-300 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:scale-[1.02] active:scale-[0.98]"
+          >
+            Decode
+          </button>
+          <button
+            id="swapBtn"
+            class="bg-slate-700/50 hover:bg-slate-600/50 text-white font-semibold py-3.5 px-4 rounded-xl transition-all duration-300 border border-slate-600/50 hover:border-slate-500/50 hover:scale-[1.02] active:scale-[0.98]"
+            title="Swap values"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+            </svg>
+          </button>
+          <button
+            id="clearBtn"
+            class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-400 font-semibold py-3.5 px-4 rounded-xl transition-all duration-300 border border-rose-500/30 hover:border-rose-500/50 hover:scale-[1.02] active:scale-[0.98]"
+            title="Clear all"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
 
-      <!-- Error Message -->
-      <div id="errorMsg" class="hidden text-red-600 text-sm bg-red-50 p-3 rounded-lg border border-red-200"></div>
+        <!-- Base64 Output -->
+        <div class="group">
+          <label for="base64Text" class="block mb-2 text-sm font-semibold text-slate-300 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            Base64
+          </label>
+          <textarea
+            id="base64Text"
+            rows="4"
+            class="block p-4 w-full text-sm text-white bg-slate-800/50 rounded-xl border border-slate-700/50 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 focus:outline-none transition-all duration-300 placeholder-slate-500 backdrop-blur-sm resize-none font-mono"
+            placeholder="Enter Base64 to decode..."
+          ></textarea>
+        </div>
 
-      <!-- Copy Buttons -->
-      <div class="flex gap-2">
-        <button
-          id="copyPlainBtn"
-          class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors text-sm"
-        >
-          Copy Plain Text
-        </button>
-        <button
-          id="copyBase64Btn"
-          class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors text-sm"
-        >
-          Copy Base64
-        </button>
+        <!-- Error Message -->
+        <div id="errorMsg" class="hidden text-rose-300 text-sm bg-rose-500/10 p-4 rounded-xl border border-rose-500/30 backdrop-blur-sm"></div>
+
+        <!-- Copy Buttons -->
+        <div class="flex gap-3">
+          <button
+            id="copyPlainBtn"
+            class="flex-1 bg-slate-800/50 hover:bg-slate-700/50 text-slate-300 hover:text-white font-medium py-2.5 px-4 rounded-xl transition-all duration-300 text-sm border border-slate-700/50 hover:border-slate-600/50 flex items-center justify-center gap-2"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+            </svg>
+            Copy Plain Text
+          </button>
+          <button
+            id="copyBase64Btn"
+            class="flex-1 bg-slate-800/50 hover:bg-slate-700/50 text-slate-300 hover:text-white font-medium py-2.5 px-4 rounded-xl transition-all duration-300 text-sm border border-slate-700/50 hover:border-slate-600/50 flex items-center justify-center gap-2"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+            </svg>
+            Copy Base64
+          </button>
+        </div>
       </div>
     </div>
 
     <!-- Popular Examples Section -->
     <div class="mt-10">
-      <h2 class="text-lg font-semibold text-gray-700 mb-3">Popular Base64 Examples</h2>
-      <p class="text-sm text-gray-500 mb-4">Click any example to decode it:</p>
+      <h2 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+        <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+        </svg>
+        Popular Base64 Examples
+      </h2>
+      <p class="text-sm text-slate-400 mb-4">Click any example to decode it:</p>
       <div id="examples" class="flex flex-wrap gap-2"></div>
     </div>
 
     <!-- URL Decode Section -->
-    <div class="mt-10 p-4 bg-white rounded-lg border border-gray-200">
-      <h2 class="text-lg font-semibold text-gray-700 mb-3">Decode from URL</h2>
-      <p class="text-sm text-gray-500 mb-2">
-        Share links like: <code class="bg-gray-100 px-1 rounded">?b64=SGVsbG8gV29ybGQ=</code>
+    <div class="mt-10 backdrop-blur-xl bg-white/5 rounded-2xl border border-white/10 p-5">
+      <h2 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+        <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+        </svg>
+        Decode from URL
+      </h2>
+      <p class="text-sm text-slate-400 mb-2">
+        Share links like: <code class="bg-slate-800/50 px-2 py-1 rounded-lg text-cyan-300 font-mono text-xs">?b64=SGVsbG8gV29ybGQ=</code>
       </p>
-      <div id="urlDecoded" class="hidden mt-3 p-3 bg-green-50 rounded border border-green-200">
-        <span class="text-sm text-gray-600">Decoded from URL:</span>
-        <div id="urlDecodedText" class="font-mono text-green-700 mt-1"></div>
+      <div id="urlDecoded" class="hidden mt-3 p-4 bg-emerald-500/10 rounded-xl border border-emerald-500/30">
+        <span class="text-sm text-slate-400">Decoded from URL:</span>
+        <div id="urlDecodedText" class="font-mono text-emerald-400 mt-1"></div>
       </div>
     </div>
 
     <!-- SEO Content Section -->
-    <article class="mt-10 p-6 bg-white rounded-lg border border-gray-200">
-      <h2 class="text-xl font-semibold text-gray-800 mb-4">What is Base64 Encoding?</h2>
-      <p class="text-gray-600 mb-4">
+    <article class="mt-10 backdrop-blur-xl bg-white/5 rounded-2xl border border-white/10 p-6 md:p-8">
+      <h2 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+        <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+        </svg>
+        What is Base64 Encoding?
+      </h2>
+      <p class="text-slate-300 mb-6 leading-relaxed">
         Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string format. It uses 64 printable characters (A-Z, a-z, 0-9, +, /) to encode data, making it safe for transmission over text-based protocols like email or HTTP.
       </p>
 
-      <h3 class="text-lg font-semibold text-gray-700 mb-2">Common Uses of Base64</h3>
-      <ul class="list-disc list-inside text-gray-600 mb-4 space-y-1">
-        <li>Embedding images in HTML/CSS (data URIs)</li>
-        <li>Encoding email attachments (MIME)</li>
-        <li>Storing complex data in JSON or XML</li>
-        <li>Basic HTTP authentication headers</li>
-        <li>Encoding binary data for API transmission</li>
+      <h3 class="text-lg font-semibold text-white mb-3">Common Uses of Base64</h3>
+      <ul class="text-slate-300 mb-6 space-y-2">
+        <li class="flex items-start gap-3">
+          <span class="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 flex-shrink-0"></span>
+          Embedding images in HTML/CSS (data URIs)
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-2 flex-shrink-0"></span>
+          Encoding email attachments (MIME)
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></span>
+          Storing complex data in JSON or XML
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 mt-2 flex-shrink-0"></span>
+          Basic HTTP authentication headers
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="w-1.5 h-1.5 rounded-full bg-rose-400 mt-2 flex-shrink-0"></span>
+          Encoding binary data for API transmission
+        </li>
       </ul>
 
-      <h3 class="text-lg font-semibold text-gray-700 mb-2">Why Use This Base64 Tool?</h3>
-      <ul class="list-disc list-inside text-gray-600 space-y-1">
-        <li><strong>100% Private:</strong> All processing happens in your browser - no server involved</li>
-        <li><strong>Instant Results:</strong> Real-time encoding and decoding as you type</li>
-        <li><strong>Free & Unlimited:</strong> No registration, no limits, no ads</li>
-        <li><strong>Shareable Links:</strong> Create URLs that auto-decode Base64 strings</li>
-      </ul>
+      <h3 class="text-lg font-semibold text-white mb-3">Why Use This Base64 Tool?</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-slate-800/30 rounded-xl p-4 border border-slate-700/30">
+          <div class="text-emerald-400 font-semibold mb-1">100% Private</div>
+          <div class="text-slate-400 text-sm">All processing happens in your browser - no server involved</div>
+        </div>
+        <div class="bg-slate-800/30 rounded-xl p-4 border border-slate-700/30">
+          <div class="text-cyan-400 font-semibold mb-1">Instant Results</div>
+          <div class="text-slate-400 text-sm">Real-time encoding and decoding as you type</div>
+        </div>
+        <div class="bg-slate-800/30 rounded-xl p-4 border border-slate-700/30">
+          <div class="text-purple-400 font-semibold mb-1">Free & Unlimited</div>
+          <div class="text-slate-400 text-sm">No registration, no limits, no ads</div>
+        </div>
+        <div class="bg-slate-800/30 rounded-xl p-4 border border-slate-700/30">
+          <div class="text-amber-400 font-semibold mb-1">Shareable Links</div>
+          <div class="text-slate-400 text-sm">Create URLs that auto-decode Base64 strings</div>
+        </div>
+      </div>
     </article>
   </div>
   </main>
 
   <!-- Footer -->
-  <footer class="bg-gray-800 text-gray-400 mt-12 py-8">
+  <footer class="relative z-10 border-t border-white/10 mt-12 py-8 backdrop-blur-sm">
     <div class="container mx-auto px-4 max-w-2xl text-center">
-      <p class="text-sm mb-2">
+      <p class="text-slate-400 text-sm mb-2">
         &copy; 2025 base64decoder.de - Free Online Base64 Encoder & Decoder
       </p>
-      <p class="text-xs">
+      <p class="text-slate-500 text-xs flex items-center justify-center gap-1">
+        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+        </svg>
         Privacy-first tool. Your data never leaves your browser.
       </p>
     </div>
@@ -339,7 +416,7 @@
     examples.forEach(example => {
       const btn = document.createElement('button');
       const b64 = btoa(example);
-      btn.className = 'px-3 py-1 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded text-sm font-mono transition-colors';
+      btn.className = 'px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 hover:text-purple-200 rounded-lg text-sm font-mono transition-all duration-300 border border-purple-500/30 hover:border-purple-500/50';
       btn.textContent = b64;
       btn.title = `Click to decode: ${example}`;
       btn.addEventListener('click', () => {
