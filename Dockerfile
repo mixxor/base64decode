@@ -1,6 +1,6 @@
-FROM nginx:1.29.4-alpine
+FROM nginx:alpine
 
-COPY index.html /usr/share/nginx/html/index.html
+COPY *.html /usr/share/nginx/html/
 
 EXPOSE 80
 
