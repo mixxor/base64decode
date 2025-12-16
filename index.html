@@ -235,7 +235,7 @@
         Decode from URL
       </h2>
       <p class="text-sm text-slate-400 mb-2">
-        Share links like: <code class="bg-slate-800/50 px-2 py-1 rounded-lg text-cyan-300 font-mono text-xs">?b64=SGVsbG8gV29ybGQ=</code>
+        Share links like: <code class="bg-slate-800/50 px-2 py-1 rounded-lg text-cyan-300 font-mono text-xs">/SGVsbG8gV29ybGQ=</code>
       </p>
       <div id="urlDecoded" class="hidden mt-3 p-4 bg-emerald-500/10 rounded-xl border border-emerald-500/30">
         <span class="text-sm text-slate-400">Decoded from URL:</span>
@@ -409,7 +409,8 @@
     document.getElementById('copyDeeplinkBtn').addEventListener('click', function() {
       const b64 = base64TextEl.value.trim();
       if (b64) {
-        const deeplink = window.location.origin + window.location.pathname + '?b64=' + encodeURIComponent(b64);
+        // Use path-based URL for SEO-friendly deeplinks
+        const deeplink = window.location.origin + '/' + encodeURIComponent(b64);
         copyToClipboard(deeplink, this);
       } else {
         showError('No Base64 value to create deeplink');
@@ -435,18 +436,34 @@
       examplesEl.appendChild(btn);
     });
 
-    // Handle URL parameter
+    // Handle URL parameter (both path-based and query param)
     const urlParams = new URLSearchParams(window.location.search);
     const b64Param = urlParams.get('b64');
-    if (b64Param) {
+
+    // Check for path-based base64 (e.g., /c2FtbXkNCg==)
+    const pathBase64 = window.location.pathname.slice(1); // Remove leading slash
+
+    // Determine which base64 value to use (path takes precedence, then query param)
+    let b64Value = null;
+    if (pathBase64 && pathBase64 !== '' && !pathBase64.endsWith('.html')) {
+      // Decode URL encoding (e.g., %3D back to =)
+      b64Value = decodeURIComponent(pathBase64);
+    } else if (b64Param) {
+      b64Value = b64Param;
+    }
+
+    if (b64Value) {
       try {
-        base64TextEl.value = b64Param;
-        const decoded = decodeURIComponent(escape(atob(b64Param)));
+        base64TextEl.value = b64Value;
+        const decoded = decodeURIComponent(escape(atob(b64Value)));
         plainTextEl.value = decoded;
         urlDecodedEl.classList.remove('hidden');
         urlDecodedTextEl.textContent = decoded;
       } catch (e) {
-        showError('Invalid Base64 in URL parameter');
+        // Only show error if it looks like an intentional base64 string
+        if (b64Param || pathBase64.includes('=') || /^[A-Za-z0-9+/]+=*$/.test(pathBase64)) {
+          showError('Invalid Base64 in URL');
+        }
       }
     }
   </script>
